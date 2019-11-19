@@ -1,28 +1,111 @@
+globals
+[
+  ; Min size of each mass
+  min-size
+  max-size
 
+  ; Gravity Constant, Probaboy won't need
+  gravitation-constant
+]
+
+
+turtles-own
+[
+  velocity
+  mass
+  radius
+  angle  ;; Angle of momentum
+
+]
+
+
+;;
+;; Setup Procedures
 to setup
+  clear-all  ; clear previous setup
+
+  ; Set global variables
+  set min-size 2
+  set max-size 5
+
+  ; Create our three bodies
+  ; Initially at three random locations
+  create-masses 2
+
+end
+
+
+;; Helper Function to create the bodies of mass
+to create-masses [num]
+  create-turtles num
+  [
+    ; Set shape
+    if bodies-shape = "arrow"
+    [set shape "default"]
+    if bodies-shape = "circle"
+    [set shape "circle"]
+
+    ; Set size and mass
+    set radius min-size + random-float (max-size - min-size)
+    set size radius
+
+    ;
+    set mass 10
+
+    ; Set Cordinates
+    setxy random-xcor random-ycor
+
+    ; Set other vaiables
+    set velocity random-float 0
+
+    if show-label?
+    [set label (word "Mass: " (precision mass 3) "\n" velocity)]
+    pendown
+  ]
+
+end
+
+; Set Go Procedures
+to go
+
+
+
+end
+
+to move
+  forward velocity
+end
+
+
+;  Calculate the net force of a single turtle by looking at the other masses
+to calculate-netforce-on-turtle
+
+
+
+
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-210
-10
-647
-448
+431
+70
+1247
+887
 -1
 -1
-13.0
+8.0
 1
 10
 1
 1
 1
 0
+0
+0
 1
-1
-1
--16
-16
--16
-16
+-50
+50
+-50
+50
 0
 0
 1
@@ -45,6 +128,54 @@ NIL
 NIL
 NIL
 1
+
+BUTTON
+96
+88
+159
+121
+NIL
+go
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+CHOOSER
+73
+295
+211
+340
+formation
+formation
+"random" "figure eight"
+0
+
+CHOOSER
+73
+342
+211
+387
+bodies-shape
+bodies-shape
+"circle" "arrow"
+0
+
+SWITCH
+73
+388
+193
+421
+show-label?
+show-label?
+0
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?
